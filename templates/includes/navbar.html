@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">ZBLOG</a>    
+      <a class="navbar-brand" href="{% url "index" %}">ZBLOG</a>    
   
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,31 +9,31 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav ml-auto-left">
             <li class="nav-item">
-                <a class="nav-link" href="/about">Hakkımızda</a>
+                <a class="nav-link" href="{% url "about" %}">Hakkımızda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/article">Makaleler</a>
+                <a class="nav-link" href="/{% url "article:articles" %}">Makaleler</a>
               </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
             {% if request.user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="/articles/dashboard">Kontrol Paneli</a>
+              <a class="nav-link" href="{% url "article:dashboard" %}">Kontrol Paneli</a>
             </li>
 
 
             <li class="nav-item">
-              <a class="nav-link" href="/user/logout">Çıkış</a>
+              <a class="nav-link" href="{% url "user:logout" %}">Çıkış</a>
             </li>
           {% else %}
 
           <li class="nav-item">
-            <a class="nav-link" href="/user/login">Giriş</a>
+            <a class="nav-link" href="{% url "user:login" %}">Giriş</a>
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href="/user/register">Kayıt Olun</a>
+            <a class="nav-link" href="{% url "user:register" %}">Kayıt Olun</a>
           </li>   
           {% endif %}     
 
