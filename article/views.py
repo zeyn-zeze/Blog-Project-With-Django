@@ -1,5 +1,7 @@
-from django.shortcuts import render,HttpResponse
-
+from django.shortcuts import render,HttpResponse,redirect,get_object_or_404
+from .forms import ArticlesForm
+from .models import Article
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
@@ -8,7 +10,37 @@ def index(request):
 def about(request):
     return render(request,"about.html")
 
+def dashboard(request):
+    articles = Article.objects.filter(author = request.user)
+    context = {
+        "articles":articles
+    }
+    return render(request,"dashboard.html",context)
+
+def addArticle(request):
+    form = ArticlesForm(request.POST or None,request.FILES or None)
+    
+    if form.is_valid():
+        
+        article = form.save(commit=False)
+        article.author = request.user
+        article.save()
 
 
 
+        messages.success(request,"Makale Eklendi")
+        return redirect("index")
+        
+    
+    
+    return render(request,"addarticle.html",{"form":form})
 
+
+def detail(request,id):
+    
+   # article = Article.objects.filter(id=id).first()
+    
+    article = get_object_or_404(Article,id= id)
+    
+    
+    return render(request,"detail.html",{"article":article})
